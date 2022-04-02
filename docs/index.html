@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>  
+    div.padded {  
+      padding-top: 0px;  
+      padding-right: 100px;  
+      padding-bottom: 0.25in;  
+      padding-left: 100px;  
+    }  
+  </style> 
+<title>Justin Richey and Orion Lehrmann  |  CS 184</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+</head>
+<body>
+<br />
+<h1 align="middle">Assignment 3: PathTracer</h1>
+    <h2 align="middle">Justin Richey and Orion Lehrmann</h2>
+
+    <div class="padded">
+        <p>In this project, we built upon what we learned and created in our ray tracer. We were able to implement glass/mirror reflection and refraction. While reflection was fairly straightforward, refraction required some more work (entering and exiting rays at different angles, etc.). Our mirror material utilized solely reflection. Our glass material used a combination of reflection and refraction, and the ratio between reflected and refracted rays was determined using Schlick’s approximation. Building out both reflection and refraction was a good way to learn about and see the effects of ray depths and multibouncing. [Second part goes here]
+        We collaborated by learning the concepts and working together through the parts we selected. If there was any conceptual confusion, we assisted one another.
+        </p>
+
+    <h2 align="middle">Part 1: Ray Generation and Intersection</h2>
+        <p>Images shown are with 256 samples per pixel and 4 samples per light.
+        The images are shown in ascending order of max ray depth: 0, 1, 2, 3, 4, 5, 100.
+        </p>
+        <div align="middle">
+          <table style="width=100%">
+            <tr>
+              <td>
+                <img src="images/spheretest0.png" align="middle" width="400px" />
+                <figcaption align="middle">Max ray depth: 0</figcaption>
+              </td>
+              <td>
+                <img src="images/spheretest1.png" align="middle" width="400px" />
+                <figcaption align="middle">Max ray depth: 1</figcaption>
+              </td>
+            </tr>
+            <br>
+            <tr>
+              <td>
+                <img src="images/spheretest2.png" align="middle" width="400px" />
+                <figcaption align="middle">Max ray depth: 2</figcaption>
+              </td>
+              <td>
+                <img src="images/spheretest3.png" align="middle" width="400px" />
+                <figcaption align="middle">Max ray depth: 3</figcaption>
+              </td>
+            </tr>
+            <br>
+            <tr>
+              <td>
+                <img src="images/spheretest4.png" align="middle" width="400px" />
+                <figcaption align="middle">Max ray depth: 4</figcaption>
+              </td>
+              <td>
+                <img src="images/spheretest5.png" align="middle" width="400px" />
+                <figcaption align="middle">Max ray depth: 5</figcaption>
+              </td>
+            </tr>
+            <br>
+            <tr>
+              <td>
+                <img src="images/spheretest100.png" align="middle" width="400px" />
+                <figcaption align="middle">Max ray depth: 100</figcaption>
+              </td>
+          </tr>
+          </table>
+        </div>
+        <p>
+            At ray depth 0, the room is black because no rays are sent from the camera. At ray depth 1, rays reach the walls and the spheres; the walls are colored and the spheres are colored where the rays of light hit it directly. However, since the depth is 1, no rays are generated from reflection or refraction. Therefore, the spheres are black except for the small regions of light. The roof is also black since it is on the same plane as the light source and is illuminated through bouncing.
+            <br/><br/>
+            At ray depth 2, we begin to see multibouncing effects from reflection. The rays generated through reflection allow for the mirror sphere to reflect the scene, and the glass sphere (through which some rays are generated from reflection and others through refraction) also begins to show its reflective quality. The roof is also illuminated thanks to reflection. However, at depth 2, the rays from refraction are not evident. This is because these rays enter the sphere, but there are no exiting rays. Therefore, the rays of the sphere from reflection are shown, but the rest of the sphere remains black as rays from refraction remain inside the sphere. Another aspect to note is that the glass sphere that is reflected from the mirror sphere is not the glass sphere that “currently” appears. The spheres in the scene reflect the rays that were generated at ray depth 1. So the reflected glass sphere on the mirror sphere is the black, unreflective glass sphere. For this same reason, the reflected roof also still appears as black.
+            <br/><br/>
+            Finally, at depth 3, we begin to see the effects of refraction. The glass sphere begins to appear as though it is glass, because the exiting rays from refraction are generated. As described in depth 2, the glass sphere reflected from the mirror ball is not the glass sphere as it currently appears. The rays from depth 2 are reflected, so the ball still appears in the reflection as the black reflective ball from depth 2.
+            <br/><br/>
+            At depth 4, we see that the reflection of the glass ball appears as blue, reflecting the exiting refracted rays that were generated at depth 3. We also see that, on the right wall, rays from the glass sphere’s refraction are reflected and appear as a small light spot. From depth 4 onwards, the images generated are fairly similar. As we go from depth 4 to 5 to 100, the shadows become lighter as more light is generally reflected and refracted. Increasing the ray depth to a very high level (i.e 100) does not have a large impact on the image; the rays only need to bounce a few times for the core visual characteristics of the image to be rendered.
+        </p>
+
+</div>
+</body>
+</html>
+
+
+
+
