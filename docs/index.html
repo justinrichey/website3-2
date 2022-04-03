@@ -80,6 +80,83 @@
             At depth 4, we see that the reflection of the glass ball appears as blue, reflecting the exiting refracted rays that were generated at depth 3. We also see that, on the right wall, rays from the glass sphere’s refraction are reflected and appear as a small light spot. From depth 4 onwards, the images generated are fairly similar. As we go from depth 4 to 5 to 100, the shadows become lighter as more light is generally reflected and refracted. Increasing the ray depth to a very high level (i.e 100) does not have a large impact on the image; the rays only need to bounce a few times for the core visual characteristics of the image to be rendered.
         </p>
 
+
+      <h2 align="middle">Part 2: Microfacet Material</h2>
+
+        <p>Implementing the rendering occurred through the creation of the Normal Distribution Function (NDF), The Fresnel Term, and Importance Sampling. The implementation was pretty straight forward with just the calculations of the formulas given. In the NDF we know that only those microfacets with normals on the half edge are able to reflect from wi to wo. The next is the Fresnel Term which we need to calculate for the R, G, B channels respectively. We can change the refraction indices for different materials, which will see further below with making the dragon silver and aluminum. Then we do importance sampling where we prioritize samples that we expect to affect the picture more.</p>
+
+        <h3 align="middle">CBdragon_microfacet_au.dae rendered with alpha set to 0.005, 0.05, 0.25 and 0.5. 128 samples per pixel and 1 samples per light.</h3>
+
+        <div align="middle">
+          <table style="width=100%">
+            <tr>
+              <td>
+                <img src="images/CBdragon_128_1_005.png" align="middle" width="400px" />
+                <figcaption align="middle">alpha: 0.005</figcaption>
+              </td>
+              <td>
+                <img src="images/CBdragon_128_1_05.png" align="middle" width="400px" />
+                <figcaption align="middle">alpha: 0.05</figcaption>
+              </td>
+            </tr>
+            <br>
+            <tr>
+              <td>
+                <img src="images/CBdragon_128_1_25.png" align="middle" width="400px" />
+                <figcaption align="middle">alpha: 0.25</figcaption>
+              </td>
+              <td>
+                <img src="images/CBdragon_128_1_50.png" align="middle" width="400px" />
+                <figcaption align="middle">alpha: 0.5</figcaption>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <p> The NDF’s formula takes into account the alpha values, where we can see the lower alpha values with the dragon seeming more shiny, and the higher alpha values with the dragons seeming more rough. The more shiny, the more mirror like the object seems, which brings to focus that lower alpha values helps keep the material more specular seeming. </p>
+
+
+        <h3 align="middle">CBbunny_microfacet_cu.dae rendered using cosine hemisphere sampling and your importance sampling. 64 samples per pixel and 1 samples per light.</h3>
+
+        <div align="middle">
+          <table style="width=100%">
+            <tr>
+              <td>
+                <img src="images/CBbunny_64_1_Default.png" align="middle" width="400px" />
+                <figcaption align="middle">Cosine Hemisphere Sampling (Default)</figcaption>
+              </td>
+              <td>
+                <img src="images/CBbunny_64_1_IS.png" align="middle" width="400px" />
+                <figcaption align="middle">Importance Sampling</figcaption>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <p> The cosine hemisphere sampling image seems more noisy, with the texture of the bunny looking a little distorted- maybe since it is not prioritizing areas that need focus- with the uniform sampling. The importance sampling creates a much clearer picture with matching sample amounts. </p>
+
+
+
+        <h3 align="middle">CBdragon_microfacet.dae in Silver and Aluminium.</h3>
+
+
+        <div align="middle">
+          <table style="width=100%">
+            <tr>
+              <td>
+                <img src="images/CBdragon_128_1_silver.png" align="middle" width="400px" />
+                <figcaption align="middle">Silver</figcaption>
+              </td>
+              <td>
+                <img src="images/CBdragon_128_1_aluminium.png" align="middle" width="400px" />
+                <figcaption align="middle">Aluminium</figcaption>
+              </td>
+            </tr>
+          </table>
+        </div>       
+
+        <p>Silver with parameters Eta = (0.059193, 0.059881, 0.047366) K = (4.1283, 3.5892, 2.8132), and Aluminium with Eta: (1.3352, 1.0109, 0.68955) K: (7.3398, 6.6157, 5.6471)</p> 
+
 </div>
 </body>
 </html>
